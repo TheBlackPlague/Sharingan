@@ -68,17 +68,16 @@ model.to(device);
 AnsiConsole.MarkupLine(p3 + device);
 
 string input = args.Length > 1 ? 
-    args[1] : AnsiConsole.Ask<string>(p4).Replace('"', ' ');
+    args[1] : AnsiConsole.Ask<string>(p4).Replace("\"", "");
 string output = args.Length > 2 ? 
-    args[2] : AnsiConsole.Ask<string>(p5).Replace('"', ' ');
+    args[2] : AnsiConsole.Ask<string>(p5).Replace("\"", "");
 
 AnsiConsole.MarkupLine(p6);
 (IEnumerable<Mat> frames, int length, double fps, Size size) = ReadVideo(input);
+VideoWriter? writer = null;
 AnsiConsole.MarkupLine(p7);
 
 int batchSize = DetermineBatchSize(size);
-
-VideoWriter? writer = null;
 
 AnsiConsole.MarkupLine(p8);
 
