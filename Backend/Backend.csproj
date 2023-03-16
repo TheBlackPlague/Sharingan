@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="OpenCvSharp4.Windows" Version="4.7.0.20230115" />
+      <PackageReference Include="TorchSharp-cuda-windows" Version="0.99.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Binary\whiteboxcartoongenerator.bin" />
+      <EmbeddedResource Include="Binary\WhiteBoxCartoonGenerator-8365fa35b8.bin">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+    </ItemGroup>
+
+</Project>
