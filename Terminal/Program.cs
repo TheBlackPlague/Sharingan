@@ -64,7 +64,7 @@ torch.Device device = args.Length > 0 ? args[0] : AnsiConsole.Prompt(
 AnsiConsole.MarkupLine(p2);
 WhiteBoxCartoonGenerator model = new();
 Utility.LoadModel(model, modelPath);
-model.to(device);
+model.to(device).eval();
 AnsiConsole.MarkupLine(p3 + device);
 
 string input = args.Length > 1 ? 

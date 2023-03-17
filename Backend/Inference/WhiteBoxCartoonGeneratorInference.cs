@@ -1,7 +1,6 @@
 ﻿using Backend.Model;
 using Backend.PostProcessing;
 using OpenCvSharp;
-using TorchSharp;
 using Size = OpenCvSharp.Size;
 using static TorchSharp.torch;
 
@@ -13,13 +12,13 @@ public static class WhiteBoxCartoonGeneratorInference
     public static IEnumerable<Mat> InferFrames(this WhiteBoxCartoonGenerator whiteBoxCartoonGenerator, 
         IEnumerable<Mat> bgrInputFrames, Size size, Device device)
     {
-        whiteBoxCartoonGenerator.to(device);
         Tensor rgbInputFrames = stack(
             bgrInputFrames
                 .AsParallel()
                 .AsOrdered()
-                .Select(frame => Utility.ImageToTensor(frame.CvtColor(ColorConversionCodes.BGR2RGB), size))
-                .ToArray()
+                .Select(
+                    frame => Utility.ImageToTensor(frame.CvtColor(ColorConversionCodes.BGR2RGB), size, device)
+                ).ToArray()
         );
         
         Tensor rgbOutputFrames = whiteBoxCartoonGenerator.forward(rgbInputFrames);

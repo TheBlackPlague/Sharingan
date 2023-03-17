@@ -118,11 +118,20 @@ public class WhiteBoxCartoonGenerator : nn.Module<Tensor, Tensor>
         base._to(deviceType, deviceIndex);
 
         // Move everything else to the device and index as well.
-        foreach ((string, nn.Module<Tensor, Tensor>) module in Modules) {
-            module.Item2.to(deviceType, deviceIndex);
+        foreach ((_, nn.Module<Tensor, Tensor> module) in Modules) {
+            module.to(deviceType, deviceIndex);
         }
         
         return this;
+    }
+
+    public override void train(bool train = true)
+    {
+        base.train(train);
+
+        foreach ((_, nn.Module<Tensor, Tensor> model) in Modules) {
+            model.train(train);
+        }
     }
 
 }

@@ -42,12 +42,12 @@ public static class Utility
         return sb.ToString();
     }
 
-    public static Tensor ImageToTensor(Mat image, Size size)
+    public static Tensor ImageToTensor(Mat image, Size size, Device device)
     {
         size = ScaleBase(size, 32);
         image = image.Resize(size);
         image.ToArray(out byte[,,] data);
-        return from_array(data, ScalarType.Byte, "cuda")
+        return from_array(data, ScalarType.Byte, device)
             .permute(2, 0, 1)
             .NormalizeImageTensor(0.5, 0.5, 255);
     }

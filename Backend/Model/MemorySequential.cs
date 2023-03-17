@@ -40,4 +40,13 @@ public class MemorySequential : Sequential
         return this;
     }
 
+    public override void train(bool on = true)
+    {
+        base.train(on);
+
+        foreach (MemoryLine line in Modules) {
+            line.train(on);
+        }
+    }
+
 }
