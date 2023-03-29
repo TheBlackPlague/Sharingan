@@ -20,6 +20,9 @@ public static class WhiteBoxCartoonGeneratorInference
                     frame => Utility.ImageToTensor(frame.CvtColor(ColorConversionCodes.BGR2RGB), size, device)
                 ).ToArray()
         );
+
+        // (frames, h, w, c) -> (frames, c, h, w)
+        rgbInputFrames = rgbInputFrames.permute(0, 3, 1, 2);
         
         Tensor rgbOutputFrames = whiteBoxCartoonGenerator.forward(rgbInputFrames);
         rgbOutputFrames = tanh(rgbOutputFrames);
